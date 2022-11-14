@@ -11,40 +11,39 @@
 // - the case of (arrow) functions
 
 //global context (not available from module, run in console)
-console.log("module global context", this);
+console.log('module global context', this);
 function ordinary() {
-  console.log("ordinary function context in strict mode", this);
+  console.log('ordinary function context in strict mode', this);
 }
 ordinary();
 const o1 = {
   A: 42,
   showA() {
-    console.log("ordinary function as object member (method)", this?.A);
+    console.log('ordinary function as object member (method)', this?.A);
   },
   showA2: function () {
-    console.log("ordinary function expression as object member", this.A);
+    console.log('ordinary function expression as object member', this.A);
   },
   showA3: () => {
-    console.log("arrow function expression as object member", this);
-  }
+    console.log('arrow function expression as object member', this);
+  },
 };
 o1.showA();
 o1.showA2();
 
 const showA = o1.showA;
-console.log("member function dereferenced ->");
+console.log('member function dereferenced ->');
 showA();
 
 // constructor scope
-class This 
-  const{ructor() {
+class This {
+  constructor() {
     this.A = 42;
   }
   showA() {
     console.log(this.A);
   }
 }
-console.log("constructed scope", new This().A);
+console.log('constructed scope', new This().A);
 
 ordinary.call({ A: 42 });
-
