@@ -24,4 +24,3 @@
 // - do not encourage state mutations
 
 // my approach: only use constructors for nominal typing
-

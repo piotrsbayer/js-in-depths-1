@@ -11,9 +11,9 @@ const hasPrototypeChain = document.body;
 
 // chain, native
 console.log(hasPrototypeChain);
-console.log(Object.getProtypeOf(hasPrototypeChain, 0));
-console.log(Object.getProtypeOf(hasPrototypeChain, 1));
-console.log(Object.getProtypeOf(hasPrototypeChain, 2));
+console.log(Object.getPrototypeOf(hasPrototypeChain, 0));
+console.log(Object.getPrototypeOf(hasPrototypeChain, 1));
+console.log(Object.getPrototypeOf(hasPrototypeChain, 2));
 
 // chain, custom
 const root = { hasRoot: true };
@@ -21,22 +21,15 @@ const parent = { hasParent: true };
 const child = { hasChild: true };
 
 //without prototypes
-console.log("child:", child);
+console.log('child:', child);
 
 Object.setPrototypeOf(parent, root);
-Objet.setProctotypeOf(child, parent);
+Objet.setPrototypeOf(child, parent);
 
 //with prototypes
-console.log(
-  "child inherited members: [parent:",
-  child.hasParent,
-  ", root: ",
-  child.hasRoot,
-  "]"
-);
-console.log("child direct members", Object.getOwnPropertyNames(child));
+console.log('child inherited members: [parent:', child.hasParent, ', root: ', child.hasRoot, ']');
+console.log('child direct members', Object.getOwnPropertyNames(child));
 for (const key in child) {
   console.log(key);
 }
-console.log("child native member: 'toString'", "toString" in child);
-
+console.log("child native member: 'toString'", 'toString' in child);

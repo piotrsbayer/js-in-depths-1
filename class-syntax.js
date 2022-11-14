@@ -24,14 +24,14 @@ const create = (ctor) => new ctor();
 create(
   class Inline {
     constructor() {
-      console.log("sup");
+      console.log('sup');
     }
   }
 );
 
 new (class Inline {
   constructor() {
-    console.log("iice");
+    console.log('iice');
   }
 })();
 
@@ -51,7 +51,7 @@ class Child extends Parent {
   }
 }
 
-console.log("inheritance, yo", new Child().hasParent)r;
+console.log('inheritance, yo', new Child().hasParent);
 
 // use super to configure parent
 class Base {
@@ -72,11 +72,8 @@ new Specific();
 // functions are objects, remember?
 Specific.soStatic = 42;
 
-console.log(
-  "static is available on the constructor function",
-  Specific.soStatic
-);
-console.log("but not on an instance", new Specific().soStatic);
+console.log('static is available on the constructor function', Specific.soStatic);
+console.log('but not on an instance', new Specific().soStatic);
 
 // this is equivalent
 class WithStatic {
@@ -88,7 +85,7 @@ console.log("declared with 'static' keyword", WithStatic.soStatic);
 // getters and setters
 class Encapsulate {
   get field() {
-    console.log("field accessed");
+    console.log('field accessed');
     return 42;
   }
   set field(value) {
@@ -99,4 +96,3 @@ class Encapsulate {
 const pretendsToHaveFields = new Encapsulate();
 console.log(pretendsToHaveFields.field);
 pretendsToHaveFields.field = 9001;
-dinary.call({ A: 42 });
