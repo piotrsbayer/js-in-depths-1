@@ -1,49 +1,102 @@
-//an implicitly available object that may refer to different things
-//depending on a context, namely:
-// - global context
-//    - script global context
-//    - module global context
-// - (ordinary) function context
-// - (ordinary) function context in strict mode
-// - object context
-// - class context
-// - explicit binding
-// - the case of (arrow) functions
+// classes are just construable functions
 
-//global context (not available from module, run in console)
-console.log('module global context', this);
-function ordinary() {
-  console.log('ordinary function context in strict mode', this);
-}
-ordinary();
-const o1 = {
-  A: 42,
-  showA() {
-    console.log('ordinary function as object member (method)', this?.A);
-  },
-  showA2: function () {
-    console.log('ordinary function expression as object member', this.A);
-  },
-  showA3: () => {
-    console.log('arrow function expression as object member', this);
-  },
-};
-o1.showA();
-o1.showA2();
-
-const showA = o1.showA;
-console.log('member function dereferenced ->');
-showA();
-
-// constructor scope
-class This {
+class ClassA {
   constructor() {
     this.A = 42;
-  }
-  showA() {
-    console.log(this.A);
+    console.log(this);
   }
 }
-console.log('constructed scope', new This().A);
 
-ordinary.call({ A: 42 });
+function ConstruableA() {
+  console.log(this);
+}
+ConstruableA.prototype.A = 42;
+
+// these 2 are syntactically equivalent
+const instanceA = new ClassA();
+console.log(instanceA instanceof ClassA);
+const constructedA = new ConstruableA();
+console.log(constructedA instanceof ConstruableA);
+
+// class declaration is actually an expression
+const create = (ctor) => new ctor();
+
+create(
+  class Inline {
+    constructor() {
+      console.log("sup");
+    }
+  }
+);
+
+new (class Inline {
+  constructor() {
+    console.log("iice");
+  }
+})();
+
+// inheritance
+class Parent {
+  constructor() {
+    this.hasParent = true;
+  }
+}
+
+class Child extends Parent {
+  constructor() {
+    // super is like calling Construable function over an object, extends only guarantees
+    // prototype chaining, not constructor calling
+    super();
+    this.hasChild = true;
+  }
+}
+
+console.log("inheritance, yo", new Child().hasParent)r;
+
+// use super to configure parent
+class Base {
+  constructor(message) {
+    console.log(message);
+  }
+}
+
+class Specific extends Base {
+  constructor() {
+    super("I'm just a child");
+  }
+}
+
+new Specific();
+
+// static
+// functions are objects, remember?
+Specific.soStatic = 42;
+
+console.log(
+  "static is available on the constructor function",
+  Specific.soStatic
+);
+console.log("but not on an instance", new Specific().soStatic);
+
+// this is equivalent
+class WithStatic {
+  static soStatic = 42;
+}
+
+console.log("declared with 'static' keyword", WithStatic.soStatic);
+
+// getters and setters
+class Encapsulate {
+  get field() {
+    console.log("field accessed");
+    return 42;
+  }
+  set field(value) {
+    console.log("heeey, I'm immutable", value);
+  }
+}
+
+const pretendsToHaveFields = new Encapsulate();
+console.log(pretendsToHaveFields.field);
+pretendsToHaveFields.field = 9001;
+dinary.call({ A: 42 });
