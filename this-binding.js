@@ -5,10 +5,10 @@
 //    - module global context
 // - (ordinary) function context
 // - (ordinary) function context in strict mode
+// - the case of (arrow) functions
 // - object context
 // - class context
 // - explicit binding
-// - the case of (arrow) functions
 
 //global context (not available from module, run in console)
 console.log("module global context", this);
@@ -30,21 +30,29 @@ const o1 = {
 };
 o1.showA();
 o1.showA2();
+o1.showA3();
 
 const showA = o1.showA;
 console.log("member function dereferenced ->");
 showA();
 
 // constructor scope
-class This 
-  const{ructor() {
+class This {
+  constructor() {
     this.A = 42;
   }
   showA() {
     console.log(this.A);
   }
 }
-console.log("constructed scope", new This().A);
+
+const t = new This();
+console.log("constructed scope ->");
+t.showA();
+
+console.log(ordinary.prototype);
 
 ordinary.call({ A: 42 });
+ordinary.apply({ A: 42 });
 
+const forever = ordinary.bind({ A: 42 });
