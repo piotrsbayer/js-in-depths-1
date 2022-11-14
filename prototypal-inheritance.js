@@ -7,7 +7,7 @@
 // - mutating prototype is a very difficukt thing for optimizers to classify and therefore
 // a performance red flag
 
-const hasPrototypeChain = document.body;
+const hasPrototypeChain = typeof window !== 'undefined' ? document.body : {};
 
 // chain, native
 console.log(hasPrototypeChain);
@@ -24,7 +24,7 @@ const child = { hasChild: true };
 console.log('child:', child);
 
 Object.setPrototypeOf(parent, root);
-Objet.setPrototypeOf(child, parent);
+Object.setPrototypeOf(child, parent);
 
 //with prototypes
 console.log('child inherited members: [parent:', child.hasParent, ', root: ', child.hasRoot, ']');
